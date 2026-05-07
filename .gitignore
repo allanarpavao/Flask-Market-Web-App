@@ -34,3 +34,8 @@ database/
 
 # logs
 *.log
+
+# arquivos
+create_item.py
+create_user.py
+delete_item.py

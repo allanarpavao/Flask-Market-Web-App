@@ -1,6 +1,10 @@
 from models import Base
-from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import String, Integer
+from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import String, Integer, ForeignKey
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from models.user import User
 
 
 class Item(Base):
@@ -11,3 +15,5 @@ class Item(Base):
     price: Mapped[int] = mapped_column(Integer, nullable=False)
     barcode: Mapped[str] = mapped_column(String(12), nullable=False, unique=True)
     description: Mapped[str] = mapped_column(String(1024), nullable=False, unique=True)
+    owner_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), nullable=False)
+    owner: Mapped["User"] = relationship("User", back_populates="items")
