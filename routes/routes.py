@@ -3,7 +3,7 @@ from models.user import User
 from models import Session
 from routes.forms import RegisterForm
 from run import app
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, flash
 
 
 @app.route("/")
@@ -28,4 +28,9 @@ def register_page():
         Session.add(user_to_create)
         Session.commit()
         return redirect(url_for('market_page'))
+    
+    if form.errors != {}:
+        for err_msg in form.errors.values():
+            flash(f'There was an error with creating a user: {err_msg}', category='danger')
+
     return render_template('register.html', form=form)
