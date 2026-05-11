@@ -1,8 +1,13 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '14f9d68685b8c04a6e4e5088'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
 
 from routes.routes import *
 
