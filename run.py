@@ -3,14 +3,15 @@ import os
 from dotenv import load_dotenv
 from extensions import bcrypt, login_manager
 
-# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 bcrypt.init_app(app)
 login_manager.init_app(app)
+login_manager.login_view = 'login_page'
+login_manager.login_message_category = 'info'
 
 from routes.routes import *
 

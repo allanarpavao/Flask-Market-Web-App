@@ -13,6 +13,7 @@ def home_page():
     return render_template('home.html')
 
 @app.route('/market')
+@login_required
 def market_page():
     items = Session.query(Item).all()
     return render_template('market.html', items=items)
@@ -52,3 +53,9 @@ def login_page():
             flash('Username and password are not a match! Please try again',
                 category='danger')
     return render_template('login.html', form=form)
+
+@app.route('/logout')
+def logout_page():
+    logout_user()
+    flash('You have been logged out!', category='info')
+    return redirect(url_for('home_page'))
