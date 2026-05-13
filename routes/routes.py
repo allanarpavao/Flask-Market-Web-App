@@ -21,8 +21,7 @@ def market_page():
         p_item_object = Session.query(Item).filter_by(name=purchased_item).first()
         if p_item_object:
             if current_user.can_purchase(p_item_object):
-                p_item_object.owner = current_user
-                current_user.budget -= p_item_object.price
+                p_item_object.buy(user=current_user)
                 Session.commit()
                 flash(f'Congratulations! You purchased {p_item_object.name} for {p_item_object.price}$', category='success')
             else:
@@ -31,8 +30,10 @@ def market_page():
     
     if request.method == "GET":
         items = Session.query(Item).filter_by(owner=None)
+        owned_items = Session.query(Item).filter_by(owner=current_user)
         return render_template('market.html', items=items,
-                           purchase_form=purchase_form)
+                           purchase_form=purchase_form,
+                           owned_items=owned_items)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register_page():

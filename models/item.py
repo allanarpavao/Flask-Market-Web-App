@@ -17,3 +17,7 @@ class Item(Base):
     description: Mapped[str] = mapped_column(String(1024), nullable=False, unique=True)
     owner_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), nullable=True)
     owner: Mapped["User"] = relationship("User", back_populates="items")
+
+    def buy(self, user=None):
+        self.owner = user
+        user.budget -= self.price
