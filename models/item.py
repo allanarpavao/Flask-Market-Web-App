@@ -15,5 +15,5 @@ class Item(Base):
     price: Mapped[int] = mapped_column(Integer, nullable=False)
     barcode: Mapped[str] = mapped_column(String(12), nullable=False, unique=True)
     description: Mapped[str] = mapped_column(String(1024), nullable=False, unique=True)
-    owner_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), nullable=False)
+    owner_id: Mapped[int] = mapped_column(Integer, ForeignKey('users.id'), nullable=True)
     owner: Mapped["User"] = relationship("User", back_populates="items")

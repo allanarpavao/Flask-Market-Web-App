@@ -19,7 +19,7 @@ class User(Base, UserMixin):
     username: Mapped[str] = mapped_column(String(30), nullable=False, unique=True)
     email_address: Mapped[str] = mapped_column(String(50), nullable=False, unique=True)
     password_hash: Mapped[str] = mapped_column(String(60), nullable=False)
-    budget: Mapped[int] = mapped_column(Integer, nullable=False, insert_default=15000)
+    budget: Mapped[int] = mapped_column(Integer, nullable=False, insert_default=1000)
     items: Mapped[List["Item"]] = relationship("Item", back_populates="owner")
 
     @property
@@ -38,3 +38,6 @@ class User(Base, UserMixin):
 
     def check_password_correction(self, attempted_password):
         return bcrypt.check_password_hash(self.password_hash, attempted_password)
+    
+    def can_purchase(self, item_obj):
+        return self.budget >= item_obj.price
