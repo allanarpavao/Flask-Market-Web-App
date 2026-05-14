@@ -21,3 +21,7 @@ class Item(Base):
     def buy(self, user=None):
         self.owner = user
         user.budget -= self.price
+
+    def sell(self, user=None):
+        self.owner = None
+        user.budget += self.price
