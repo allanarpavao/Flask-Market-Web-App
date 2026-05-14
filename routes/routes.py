@@ -35,8 +35,10 @@ def market_page():
         if s_item_object:
             if current_user.can_sell(s_item_object):
                 s_item_object.sell(user=current_user)
-            Session.commit()
-            flash(f'Item sold successfully! You received {s_item_object.price}$ for {s_item_object.name}.', category='success')
+                Session.commit()
+                flash(f'Item sold successfully! You received {s_item_object.price}$ for {s_item_object.name}.', category='success')
+            else:
+                flash(f'Something went wrong with selling {s_item_object.name}', category='danger')
 
         return redirect(url_for('market_page'))
     
