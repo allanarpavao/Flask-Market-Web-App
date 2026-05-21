@@ -118,4 +118,3 @@ Ideias for improvements
 ## 📌 Notes
 
 - The app creates the SQLite database automatically in `database/db.sqlite3`
-- Keep the `.env` file secret and do not commit it to version control
